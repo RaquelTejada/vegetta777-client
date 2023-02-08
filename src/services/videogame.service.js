@@ -36,8 +36,12 @@ class VideogameService {
         return this.api.post('/saveVideogame', videogameData)
     }
 
-    filteredVideogame(category, votes) {
-        return this.api.get(`/filtered?category=${category}&votes=${votes}`)
+    filteredVideogame(category) {
+        return this.api.get(`/filtered?category=${category}`)
+    }
+
+    getOneVideogame(videogame_id) {
+        return this.api.get(`/getOneVideogame/${videogame_id}`)
     }
 }
 

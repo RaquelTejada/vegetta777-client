@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap"
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../../contexts/auth.context"
 import authService from "../../services/auth.service"
+// import ErrorMessage from "../ErrorMessage/ErrorMessage"
 
 
 const LoginForm = () => {
@@ -51,12 +52,14 @@ const LoginForm = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
-                <Form.Label>Contraseña</Form.Label>
+                <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
             </Form.Group>
 
+            {/* {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined} */}
+
             <div className="d-grid">
-                <Button variant="dark" type="submit">Access</Button>
+                <Button variant="dark" type="submit">Log In</Button>
             </div>
 
         </Form>

@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/auth.context'
 
 const Navigation = () => {
 
-    // const { user, logoutUser } = useContext(AuthContext)
+    const { user, logoutUser } = useContext(AuthContext)
 
     return (
         <Navbar className='color-nav' expand="lg">
@@ -16,16 +16,27 @@ const Navigation = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home">Videogames List</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-
+                    <Nav.Link href="/videogameList">Videogames List</Nav.Link>
+                    <Nav.Link href="/createVideogame">Create Videogames</Nav.Link>
                     <NavDropdown title="Access" id="basic-nav-dropdown">
-                        <Link to="/signup">
-                            <Nav.Link className='dropdown-text ' as='div'>Sign Up</Nav.Link>
-                        </Link>
-                        <Link to="/login">
-                            <Nav.Link className='dropdown-text' as='div'>Log In</Nav.Link>
-                        </Link>
+                        {
+                            !user
+                                ?
+                                <>
+                                    <Link to="/signup">
+                                        <Nav.Link className='dropdown-text ' as='div'>Sign Up</Nav.Link>
+                                    </Link>
+                                    <Link to="/login">
+                                        <Nav.Link className='dropdown-text' as='div'>Log In</Nav.Link>
+                                    </Link>
+                                </>
+                                :
+                                <>
+                                    <Link to="/">
+                                        {user && <Nav.Link className='dropdown-text' as='div' onClick={logoutUser}>Log Out</Nav.Link>}
+                                    </Link>
+                                </>
+                        }
                     </NavDropdown>
 
                 </Nav>
