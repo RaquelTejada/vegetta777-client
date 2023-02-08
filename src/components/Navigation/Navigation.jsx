@@ -9,16 +9,16 @@ const Navigation = () => {
     const { user, logoutUser } = useContext(AuthContext)
 
     return (
-        <Navbar className='color-nav' expand="lg">
+        <Navbar className='color-nav' collapseOnSelect expand="lg">
             <Link to="/">
-                <Navbar.Brand className='brand-name' as='div'>Vegetta777</Navbar.Brand>
+                <Navbar.Brand className='brand-name' as='div'>VV2023</Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/videogameList">Videogames List</Nav.Link>
+                    {/* <Nav.Link href="/videogameList">Videogames List</Nav.Link> */}
                     <Nav.Link href="/createVideogame">Create Videogames</Nav.Link>
-                    <NavDropdown title="Access" id="basic-nav-dropdown">
+                    <NavDropdown title="Access" align="end">
                         {
                             !user
                                 ?
