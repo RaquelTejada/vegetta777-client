@@ -3,7 +3,6 @@ import { Form, Button, Row, Col } from "react-bootstrap"
 import videogameService from "../../services/videogame.service"
 import './NewVideogameForm.css'
 import { VideogameContext } from "../../contexts/videogame.context"
-import { useNavigate } from 'react-router-dom'
 
 const NewVideogameForm = ({ fireFinalActions }) => {
 
@@ -28,7 +27,7 @@ const NewVideogameForm = ({ fireFinalActions }) => {
         e.preventDefault()
 
         videogameService
-            .saveVideogame({ ...videogameData })
+            .saveVideogame({ ...videogameData, image })
             .then(() => {
                 fireFinalActions();
                 loadVideogames()
@@ -36,7 +35,7 @@ const NewVideogameForm = ({ fireFinalActions }) => {
             .catch(err => setErrors(err.response.data.errorMessages))
     }
 
-    const [loadingImage, setLoadingImage] = useState(false)
+    // const [loadingImage, setLoadingImage] = useState(false)
 
 
     return (
@@ -65,7 +64,7 @@ const NewVideogameForm = ({ fireFinalActions }) => {
             </Form.Group>
 
             <div className="d-grid">
-                <Button className="create-button" type="submit" disabled={loadingImage}>{loadingImage ? 'Loading image...' : 'Create Videogame'}</Button>
+                <Button className="create-button" type="submit">{'Create Videogame'}</Button>
             </div>
 
         </Form >

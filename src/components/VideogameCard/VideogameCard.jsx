@@ -47,13 +47,13 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
 
     return (
         <>
-            < Card className="mb-4 videogame-card">
+            < Card className="mb-4 videogame-card VideogameCard">
                 <Card.Img className='videogame-image' variant="top" src={image} />
                 <Card.Body>
                     <div>
-                        <Card.Title className='videogame-card-title'>Name: {name}</Card.Title>
-                        <Card.Title className='videogame-card-title'>Category: {category}</Card.Title>
-                        <Card.Title className='videogame-card-title'>Votes: {votes.length}</Card.Title>
+                        <Card.Title>Name: {name}</Card.Title>
+                        <Card.Title>Category: {category}</Card.Title>
+                        <Card.Title>Votes: {votes.length}</Card.Title>
                     </div>
                     {
                         !owner || owner != user?._id
@@ -64,9 +64,9 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                             <>
                                 <div className="d-grid">
                                     <ButtonGroup aria-label="Basic example">
-                                        <Button className="fill-card itinerary-button d-flex align-items-center justify-content-center" variant="gray" onClick={openModal}>Edit</Button>
+                                        <button className="span-home-page" variant="gray" onClick={openModal}>Edit</button>
                                         <>
-                                            <Button className="fill-card itinerary-button d-flex align-items-center justify-content-center" variant="gray" onClick={deleteVideogame}>Delete</Button>
+                                            <button className="span-home-page" variant="gray" onClick={deleteVideogame}>Delete</button>
 
                                             <Modal show={showModal} onHide={closeModal}>
                                                 <Modal.Header closeButton>

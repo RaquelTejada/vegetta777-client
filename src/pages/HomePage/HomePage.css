@@ -24,7 +24,6 @@ span {
     --shadow-end: 282deg, 90%, 50%;
     --shadow-inner: 277deg, 90%, 62%;
     all: unset;
-    /* color: hsla(var(--text-base), 1); */
     color: black;
     font: 700 1.125rem/1.2 Raleway, sans-serif;
     letter-spacing: 0.08em;
