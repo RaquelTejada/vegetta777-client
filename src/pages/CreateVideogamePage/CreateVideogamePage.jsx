@@ -1,15 +1,12 @@
 import { useContext, useState } from "react"
 import { Col, Row, Button, Modal, Container } from "react-bootstrap"
 import { Link } from 'react-router-dom'
-import VideogameCard from '../../components/VideogameCard/VideogameCard'
 import { VideogameContext } from "../../contexts/videogame.context"
 import { AuthContext } from '../../contexts/auth.context'
 import NewVideogameForm from '../../components/NewVideogameForm/NewVideogameForm'
 import VideogameListPage from "../VideogameListPage/VideogameListPage"
 
 const VideogamePage = () => {
-
-    const { videogames } = useContext(VideogameContext)
 
     const { user } = useContext(AuthContext)
     const [showModal, setShowModal] = useState(false)

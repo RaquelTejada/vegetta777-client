@@ -46,7 +46,7 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
         videogameService
             .editVideogame(videogame_id, videogameData)
             .then(() => {
-                navigate(`/details/${videogame_id}`)
+                navigate('/createVideogame')
                 closeModal()
             })
             .catch(err => console.error(err))
@@ -54,7 +54,7 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
 
 
 
-    const { image, name, category, votes, owner } = videogameData
+    const { image, name, category } = videogameData
 
     return (
         <Form onSubmit={handleFormSubmit}>

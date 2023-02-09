@@ -1,14 +1,33 @@
 import './VideogameListPage.css'
-import { Card, Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import videogameService from '../../services/videogame.service'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import VideogameCard from '../../components/VideogameCard/VideogameCard'
+import FilterName from '../../components/FilterName/FilterName'
 
 
 const VideogameListPage = () => {
 
     const [videogames, setVideogames] = useState()
+    const [query, setQuery] = useState(null)
+    const [videogameSortByName, setVideogameSortByName] = useState()
+
+    useEffect(() => {
+        loadData()
+    }, [query])
+
+    const loadData = () => {
+
+        query ?
+            videogameService
+                .filteredVideogame(query)
+                .then(({ data }) => {
+                    setVideogames(data)
+                })
+                .catch(err => console.log(err))
+            :
+            setQuery(null)
+    }
 
     const printVideogames = () => {
 
@@ -22,10 +41,23 @@ const VideogameListPage = () => {
         printVideogames()
     }, [])
 
+    const sortByName = () => {
+        const sortedByName = [...videogameSortByName];
+        console.log(videogameSortByName)
+        sortedByName.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        });
+        setVideogameSortByName(sortedByName);
+    };
 
     return (
         <>
             <Container fluid>
+                <div>
+                    <h3 className="titles mb-5">Search by name</h3>
+                    <FilterName setQuery={setQuery} />
+                </div>
+                <button onClick={sortByName}>Sort by name</button>
                 <Row>
                     {
                         videogames ? videogames.map((videogame, idx) => {
@@ -37,6 +69,7 @@ const VideogameListPage = () => {
                                         category={videogame.category}
                                         votes={videogame.votes}
                                         owner={videogame.owner}
+                                        _id={videogame._id}
                                     />
                                 </Col>
                             )

@@ -7,6 +7,7 @@ import { AuthContext } from './../../contexts/auth.context'
 import { VideogameContext } from '../../contexts/videogame.context'
 import videogameService from '../../services/videogame.service'
 import EditVideogameForm from '../../components/EditVideogameForm/EditVideogameForm'
+import { useNavigate } from 'react-router-dom'
 
 function VideogameCard({ image, name, category, votes, owner, _id }) {
 
@@ -14,13 +15,15 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
 
     const { user } = useContext(AuthContext)
 
+    const navigate = useNavigate()
+
     const deleteVideogame = e => {
         e.preventDefault()
-
         videogameService
             .deleteVideogame(_id)
             .then(() => {
-                loadVideogames(category)
+                loadVideogames()
+                navigate('/createVideogame')
             })
             .catch(err => console.error(err))
     }
@@ -32,57 +35,58 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
 
     return (
         <>
-            {
-                !user
-                    ?
-                    < Card className="mb-4 VideogameCard">
-                        <Card.Img variant="top" src={image} />
-                        <Link to={`/login`}>
-                            <div>
-                                <Card.Title className='videogame-card-title'>{name}</Card.Title>
-                            </div>
-                        </Link>
-                    </Card>
-                    :
+            < Card className="mb-4 videogame-card">
+                <Card.Img className='videogame-image' variant="top" src={image} />
+                <Card.Body>
+                    <div>
+                        <Card.Title className='videogame-card-title'>Name: {name}</Card.Title>
+                        <Card.Title className='videogame-card-title'>Category: {category}</Card.Title>
+                        <Card.Title className='videogame-card-title'>Votes: {votes}</Card.Title>
+                    </div>
+                    {
+                        !owner || owner != user?._id
+                            ?
+                            <>
+                            </>
+                            :
+                            <>
+                                <div className="d-grid">
+                                    <ButtonGroup aria-label="Basic example">
+                                        <Button className="fill-card itinerary-button d-flex align-items-center justify-content-center" variant="gray" onClick={openModal}>Edit</Button>
+                                        <>
+                                            <Button className="fill-card itinerary-button d-flex align-items-center justify-content-center" variant="gray" onClick={deleteVideogame}>Delete</Button>
 
-                    < Card className="mb-4 videogame-card">
-                        <Card.Img className='videogame-image' variant="top" src={image} />
-                        <Card.Body>
-                            <div>
-                                <Card.Title className='videogame-card-title'>Name: {name}</Card.Title>
-                                <Card.Title className='videogame-card-title'>Category: {category}</Card.Title>
-                                <Card.Title className='videogame-card-title'>Votes: {votes}</Card.Title>
-                            </div>
-                            {
-                                !owner || owner != user?._id
-                                    ?
-                                    <>
-                                    </>
-                                    :
-                                    <>
-                                        <div className="d-grid">
-                                            <ButtonGroup aria-label="Basic example">
-                                                <Button className="fill-card itinerary-button d-flex align-items-center justify-content-center" variant="gray" onClick={openModal}>Edit</Button>
-                                                <>
-                                                    <Button className="fill-card itinerary-button d-flex align-items-center justify-content-center" variant="gray" onClick={deleteVideogame}>Delete</Button>
+                                            <Modal show={showModal} onHide={closeModal}>
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Edit Videogame</Modal.Title>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <EditVideogameForm videogame_id={_id} closeModal={closeModal} />
+                                                </Modal.Body>
+                                            </Modal>
+                                        </>
+                                    </ButtonGroup>
+                                </div>
+                            </>
+                    }
+                    {
+                        !user
+                            ?
+                            <>
+                                <Link to="/login">
+                                    <span className='span-home-page'>Vote</span>
+                                </Link>
+                            </>
+                            :
+                            <>
+                                <Link to="/videogameList">
+                                    <span className='span-home-page'>Vote</span>
+                                </Link>
+                            </>
+                    }
 
-                                                    <Modal show={showModal} onHide={closeModal}>
-                                                        <Modal.Header closeButton>
-                                                            <Modal.Title>Create Videogame</Modal.Title>
-                                                        </Modal.Header>
-                                                        <Modal.Body>
-                                                            <EditVideogameForm videogame_id={_id} closeModal={closeModal} />
-                                                        </Modal.Body>
-                                                    </Modal>
-                                                </>
-                                            </ButtonGroup>
-                                        </div>
-                                    </>
-                            }
-
-                        </Card.Body>
-                    </Card>
-            }
+                </Card.Body>
+            </Card>
         </>
     );
 }

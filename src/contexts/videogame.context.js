@@ -12,9 +12,9 @@ function VideogameProviderWrapper(props) {
         setVideogames([])
     }
 
-    const loadVideogames = (category, votes) => {
+    const loadVideogames = () => {
         videogameService
-            .getfilteredVideogame(category, votes)
+            .getAllVideogames()
             .then((response) => {
                 setVideogames(response.data)
             })
@@ -23,7 +23,7 @@ function VideogameProviderWrapper(props) {
 
     const getAllVideogames = () => {
         videogameService
-            .getVideogames()
+            .getAllVideogames()
             .then((response) => {
                 setVideogames(response.data)
             })
@@ -32,7 +32,7 @@ function VideogameProviderWrapper(props) {
 
 
     return (
-        < VideogameContext.Provider value={{ videogames, loadVideogames, getAllVideogames }}>
+        < VideogameContext.Provider value={{ videogames, resetVideogame, loadVideogames, getAllVideogames }}>
             {props.children}
         </VideogameContext.Provider >
 

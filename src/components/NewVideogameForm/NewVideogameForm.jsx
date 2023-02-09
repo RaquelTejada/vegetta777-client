@@ -6,7 +6,7 @@ import './NewVideogameForm.css'
 
 import { useNavigate } from 'react-router-dom'
 
-const NewVideogameForm = ({ fireFinalActions }) => {
+const NewVideogameForm = () => {
 
     const [videogameData, setVideogameData] = useState({
         image: '',
@@ -16,18 +16,9 @@ const NewVideogameForm = ({ fireFinalActions }) => {
 
     const { image, name, category } = videogameData
 
-    const handleAutoCompleteCity = async value => {
-        setVideogameData({ ...videogameData, category: value })
-    }
-
     const handleInputChange = e => {
         const { name, value } = e.target
         setVideogameData({ ...videogameData, [name]: value })
-    }
-
-    const handleCheckboxChange = e => {
-        const { name, checked } = e.target
-        setVideogameData({ ...videogameData, [name]: checked })
     }
 
     const navigate = useNavigate()
@@ -39,8 +30,8 @@ const NewVideogameForm = ({ fireFinalActions }) => {
         videogameService
             .saveVideogame({ ...videogameData })
             .then((response) => {
-                const { _id: videogame_id } = response.data
-                navigate(`/details/${videogame_id}`)
+                // const { _id: videogame_id } = response.data
+                navigate('/createVideogame')
             })
             .catch(err => setErrors(err.response.data.errorMessages))
     }

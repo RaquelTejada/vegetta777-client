@@ -16,8 +16,11 @@ const Navigation = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    {/* <Nav.Link href="/videogameList">Videogames List</Nav.Link> */}
-                    <Nav.Link href="/createVideogame">Create Videogames</Nav.Link>
+                    {
+                        <Link to="/createVideogame">
+                            {user?.role === "ADMIN" && <Nav.Link as="div">Create Videogames</Nav.Link>}
+                        </Link>
+                    }
                     <NavDropdown title="Access" align="end">
                         {
                             !user
