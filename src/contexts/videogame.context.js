@@ -32,7 +32,7 @@ function VideogameProviderWrapper(props) {
 
 
     return (
-        < VideogameContext.Provider value={{ videogames, resetVideogame, loadVideogames, getAllVideogames }}>
+        < VideogameContext.Provider value={{ videogames, setVideogames, resetVideogame, loadVideogames, getAllVideogames }}>
             {props.children}
         </VideogameContext.Provider >
 

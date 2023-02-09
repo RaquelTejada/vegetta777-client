@@ -24,6 +24,7 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
             .then(() => {
                 loadVideogames()
                 navigate('/createVideogame')
+
             })
             .catch(err => console.error(err))
     }
@@ -33,6 +34,17 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
+    const handleVote = () => {
+
+        videogameService
+            .addVideogameVote(_id)
+            .then(() => {
+                loadVideogames()
+            })
+            .catch(err => console.error(err))
+    }
+
+
     return (
         <>
             < Card className="mb-4 videogame-card">
@@ -41,7 +53,7 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                     <div>
                         <Card.Title className='videogame-card-title'>Name: {name}</Card.Title>
                         <Card.Title className='videogame-card-title'>Category: {category}</Card.Title>
-                        <Card.Title className='videogame-card-title'>Votes: {votes}</Card.Title>
+                        <Card.Title className='videogame-card-title'>Votes: {votes.length}</Card.Title>
                     </div>
                     {
                         !owner || owner != user?._id
@@ -79,9 +91,7 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                             </>
                             :
                             <>
-                                <Link to="/videogameList">
-                                    <span className='span-home-page'>Vote</span>
-                                </Link>
+                                <button onClick={handleVote} className='span-home-page'>Vote</button>
                             </>
                     }
 

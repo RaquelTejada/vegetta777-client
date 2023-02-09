@@ -2,11 +2,12 @@ import { useState, useContext } from "react"
 import { Form, Button, Row, Col } from "react-bootstrap"
 import videogameService from "../../services/videogame.service"
 import './NewVideogameForm.css'
-
-
+import { VideogameContext } from "../../contexts/videogame.context"
 import { useNavigate } from 'react-router-dom'
 
-const NewVideogameForm = () => {
+const NewVideogameForm = ({ fireFinalActions }) => {
+
+    const { loadVideogames } = useContext(VideogameContext)
 
     const [videogameData, setVideogameData] = useState({
         image: '',
@@ -21,7 +22,6 @@ const NewVideogameForm = () => {
         setVideogameData({ ...videogameData, [name]: value })
     }
 
-    const navigate = useNavigate()
     const [errors, setErrors] = useState([])
 
     const handleFormSubmit = e => {
@@ -29,39 +29,22 @@ const NewVideogameForm = () => {
 
         videogameService
             .saveVideogame({ ...videogameData })
-            .then((response) => {
-                // const { _id: videogame_id } = response.data
-                navigate('/createVideogame')
+            .then(() => {
+                fireFinalActions();
+                loadVideogames()
             })
             .catch(err => setErrors(err.response.data.errorMessages))
     }
 
     const [loadingImage, setLoadingImage] = useState(false)
 
-    // const handleFileUpload = e => {
-
-    //     setLoadingImage(true)
-
-    //     const formData = new FormData()
-    //     formData.append('imageData', e.target.files[0])
-
-    //     uploadServices
-    //         .uploadimage(formData)
-    //         .then(res => {
-    //             setItineraryData({ ...itineraryData, images: res.data.cloudinary_url })
-    //             setLoadingImage(false)
-    //         })
-    //         .catch(err => setErrors(err.response.data.errorMessages))
-    // }
 
     return (
         <Form onSubmit={handleFormSubmit}>
 
             <Form.Group className="mb-3" controlId="desc">
                 <Form.Label>Image</Form.Label>
-                <Form.Control type="file"
-                // onChange={handleFileUpload} 
-                />
+                <Form.Control type="file" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="desc">

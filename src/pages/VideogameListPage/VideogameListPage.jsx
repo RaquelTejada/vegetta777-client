@@ -4,13 +4,15 @@ import videogameService from '../../services/videogame.service'
 import { useState, useEffect } from 'react'
 import VideogameCard from '../../components/VideogameCard/VideogameCard'
 import FilterName from '../../components/FilterName/FilterName'
+import { VideogameContext } from '../../contexts/videogame.context'
+import { useContext } from 'react'
 
 
 const VideogameListPage = () => {
 
-    const [videogames, setVideogames] = useState()
     const [query, setQuery] = useState(null)
-    const [videogameSortByName, setVideogameSortByName] = useState()
+
+    const { videogames, setVideogames } = useContext(VideogameContext)
 
     useEffect(() => {
         loadData()
@@ -41,14 +43,16 @@ const VideogameListPage = () => {
         printVideogames()
     }, [])
 
-    const sortByName = () => {
-        const sortedByName = [...videogameSortByName];
-        console.log(videogameSortByName)
-        sortedByName.sort((a, b) => {
-            return a.name.localeCompare(b.name);
-        });
-        setVideogameSortByName(sortedByName);
-    };
+    const filterAlphabeticaly = () => {
+
+        videogameService
+            .getAlphabeticOrder('asc')
+            .then(({ data }) => {
+                setVideogames(data)
+            })
+            .catch(err => console.log(err))
+    }
+
 
     return (
         <>
@@ -57,12 +61,14 @@ const VideogameListPage = () => {
                     <h3 className="titles mb-5">Search by name</h3>
                     <FilterName setQuery={setQuery} />
                 </div>
-                <button onClick={sortByName}>Sort by name</button>
+                <div>
+                    <button onClick={filterAlphabeticaly}>Sort A-Z</button>
+                </div>
                 <Row>
                     {
                         videogames ? videogames.map((videogame, idx) => {
                             return (
-                                <Col md={{ span: 3 }}>
+                                <Col key={idx} md={{ span: 3 }}>
                                     <VideogameCard
                                         image={videogame.image}
                                         name={videogame.name}

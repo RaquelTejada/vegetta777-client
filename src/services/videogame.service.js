@@ -43,6 +43,14 @@ class VideogameService {
     getOneVideogame(videogame_id) {
         return this.api.get(`/getOneVideogame/${videogame_id}`)
     }
+
+    getAlphabeticOrder(dir) {
+        return this.api.get(`/getVideogamesSorted?name=${dir}`)
+    }
+
+    addVideogameVote(videogame_id) {
+        return this.api.post(`/addVideogameVote/${videogame_id}`)
+    }
 }
 
 const videogameService = new VideogameService()
