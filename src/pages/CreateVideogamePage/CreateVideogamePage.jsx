@@ -29,6 +29,7 @@ const VideogamePage = () => {
     }
     useEffect(() => {
         printVideogames()
+        // eslint-disable-next-line
     }, [])
 
     return (

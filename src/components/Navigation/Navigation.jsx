@@ -11,7 +11,8 @@ const Navigation = () => {
     return (
         <Navbar className='nav' collapseOnSelect expand="lg">
             <Link to="/" className='brand-name'>
-                <img className='logo-img' src="https://res.cloudinary.com/drcjyzigg/image/upload/v1676030350/ATTOMO/vegetta777.png"></img>
+                <img className='logo-img' src="https://res.cloudinary.com/drcjyzigg/image/upload/v1676030350/ATTOMO/vegetta777.png"
+                    alt='vegetta777-logo' />
             </Link>
 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -16,8 +16,6 @@ const SignupForm = () => {
         setSignupData({ ...signupData, [name]: value })
     }
 
-    const [errors, setErrors] = useState([])
-
     const navigate = useNavigate()
 
     const handleSubmit = e => {
@@ -30,7 +28,7 @@ const SignupForm = () => {
                 navigate('/login')
             })
             .catch(err => {
-                setErrors(err.response.data.errorMessages)
+                console.log(err.response.data.errorMessages)
             })
     }
 

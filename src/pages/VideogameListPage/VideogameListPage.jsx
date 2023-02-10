@@ -15,6 +15,7 @@ const VideogameListPage = () => {
 
     useEffect(() => {
         loadData()
+        // eslint-disable-next-line
     }, [query])
 
     const loadData = () => {
@@ -40,6 +41,7 @@ const VideogameListPage = () => {
 
     useEffect(() => {
         printVideogames()
+        // eslint-disable-next-line
     }, [])
 
     const filterAlphabeticalyAsc = () => {

@@ -7,8 +7,6 @@ import authService from "../../services/auth.service"
 
 const LoginForm = () => {
 
-    const { user } = useContext(AuthContext)
-
     const [loginData, setLoginData] = useState({
         email: '',
         password: ''
@@ -18,8 +16,6 @@ const LoginForm = () => {
         const { value, name } = e.target
         setLoginData({ ...loginData, [name]: value })
     }
-
-    const [errors, setErrors] = useState([])
 
     const navigate = useNavigate()
     const { storeToken, authenticateUser } = useContext(AuthContext)
@@ -36,7 +32,7 @@ const LoginForm = () => {
                 authenticateUser()
                 navigate('/')
             })
-            .catch(err => setErrors(err.response.data.errorMessages))
+            .catch(err => console.log(err.response.data.errorMessages))
     }
 
     const { password, email } = loginData

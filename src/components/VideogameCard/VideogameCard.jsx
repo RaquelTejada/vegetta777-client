@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { Link } from "react-router-dom"
 import './VideogameCard.css'
 import Card from 'react-bootstrap/Card'
-import { Button, ButtonGroup, Modal } from 'react-bootstrap';
+import { ButtonGroup, Modal } from 'react-bootstrap';
 import { AuthContext } from './../../contexts/auth.context'
 import { VideogameContext } from '../../contexts/videogame.context'
 import videogameService from '../../services/videogame.service'
@@ -56,7 +56,7 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                         <Card.Title>Votes: {votes.length}</Card.Title>
                     </div>
                     {
-                        !owner || owner != user?._id
+                        !owner || owner !== user?._id
                             ?
                             <>
                             </>

@@ -21,8 +21,6 @@ const NewVideogameForm = ({ fireFinalActions }) => {
         setVideogameData({ ...videogameData, [name]: value })
     }
 
-    const [errors, setErrors] = useState([])
-
     const handleFormSubmit = e => {
         e.preventDefault()
 
@@ -32,7 +30,7 @@ const NewVideogameForm = ({ fireFinalActions }) => {
                 fireFinalActions();
                 loadVideogames()
             })
-            .catch(err => setErrors(err.response.data.errorMessages))
+            .catch(err => console.log(err.response.data.errorMessages))
     }
 
 

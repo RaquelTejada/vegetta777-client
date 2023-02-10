@@ -16,6 +16,7 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
             .getOneVideogame(videogame_id)
             .then(({ data }) => setVideogameData(data))
             .catch(err => console.log(err))
+        // eslint-disable-next-line
     }, [])
 
     const navigate = useNavigate()
