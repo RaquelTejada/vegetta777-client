@@ -1,5 +1,6 @@
-import { Form, Button, Row, Col } from "react-bootstrap"
+import { Form, Row } from "react-bootstrap"
 import { useState } from 'react'
+import './FilterName.css'
 
 
 const FilterName = ({ setQuery }) => {
@@ -18,14 +19,13 @@ const FilterName = ({ setQuery }) => {
 
     return (
         <Form onSubmit={handleFormSubmit} >
-            <Form.Group className="mb-4" controlId="ingredient">
+            <Form.Group className="mb-4">
                 <Row>
-                    <Col md={{ span: 7, offset: 2 }} >
-                        <Form.Control type="text" name="name" value={inputValue} onChange={searchVideogame} placeholder='Search Videogame by name' />
-                    </Col>
-                    <Col md={{ span: 1 }}>
-                        <Button variant="dark" type="submit"></Button>
-                    </Col>
+                    <div className="mt-3">
+                        <Form.Control className="search-var" type="text" name="name" value={inputValue} onChange={searchVideogame}
+                            placeholder='Search Videogame by name and press "Enter"' />
+                    </div>
+
                 </Row>
             </Form.Group>
         </Form>

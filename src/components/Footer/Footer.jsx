@@ -1,7 +1,8 @@
 import './Footer.css'
 
 const Footer = () =>
-    <footer>All right reserved to the author</footer>
+
+    <footer>All rights reserved to the author</footer>
 
 
 export default Footer

@@ -1,9 +1,30 @@
-.color-nav {
+.nav {
     background-color: #32ec95;
+    display: flex;
+    justify-content: space-between !important;
+}
+
+.navbar-collapse {
+    flex-grow: unset !important;
+}
+
+.nav>* {
+    margin-inline: 20px;
+}
+
+@media (min-width: 992px) {
+    .dropdown-menu[data-bs-popper] {
+        left: -70% !important;
+        width: 50% !important;
+    }
 }
 
 .brand-name {
-    margin-left: 20px;
+    text-decoration: none !important;
+}
+
+.brand-name-admin {
+    text-decoration: none !important;
 }
 
 .logo-img {
@@ -13,5 +34,14 @@
 
 .dropdown-text {
     color: rgba(0, 0, 0, 0.55);
-    padding: 5px;
+    text-decoration: none !important;
+}
+
+.dropdown-text-logout {
+    color: rgba(0, 0, 0, 0.55);
+    text-decoration: none !important;
+}
+
+.logo-img {
+    width: 70px;
 }

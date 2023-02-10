@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { Form, Button, Row, Col } from "react-bootstrap"
+import { Form } from "react-bootstrap"
 import videogameService from "../../services/videogame.service"
 import './NewVideogameForm.css'
 import { VideogameContext } from "../../contexts/videogame.context"
@@ -35,8 +35,6 @@ const NewVideogameForm = ({ fireFinalActions }) => {
             .catch(err => setErrors(err.response.data.errorMessages))
     }
 
-    // const [loadingImage, setLoadingImage] = useState(false)
-
 
     return (
         <Form onSubmit={handleFormSubmit}>
@@ -63,10 +61,9 @@ const NewVideogameForm = ({ fireFinalActions }) => {
                 </Form.Select>
             </Form.Group>
 
-            <div className="d-grid">
-                <Button className="create-button" type="submit">{'Create Videogame'}</Button>
+            <div className="d-flex justify-content-center">
+                <button type="submit">{'Create Videogame'}</button>
             </div>
-
         </Form >
     )
 }

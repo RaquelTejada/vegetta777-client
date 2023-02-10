@@ -50,7 +50,7 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
             < Card className="mb-4 videogame-card VideogameCard">
                 <Card.Img className='videogame-image' variant="top" src={image} />
                 <Card.Body>
-                    <div>
+                    <div className='card-text'>
                         <Card.Title>Name: {name}</Card.Title>
                         <Card.Title>Category: {category}</Card.Title>
                         <Card.Title>Votes: {votes.length}</Card.Title>
@@ -64,7 +64,7 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                             <>
                                 <div className="d-grid">
                                     <ButtonGroup aria-label="Basic example">
-                                        <button className="span-home-page" variant="gray" onClick={openModal}>Edit</button>
+                                        <button className="span-home-page margin-buttons" variant="gray" onClick={openModal}>Edit</button>
                                         <>
                                             <button className="span-home-page" variant="gray" onClick={deleteVideogame}>Delete</button>
 
@@ -86,12 +86,12 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                             ?
                             <>
                                 <Link to="/login">
-                                    <span className='span-home-page'>Vote</span>
+                                    <button className='span-home-page'>Vote</button>
                                 </Link>
                             </>
                             :
                             <>
-                                <button onClick={handleVote} className='span-home-page'>Vote</button>
+                                <button onClick={handleVote} className='span-home-page mt-2'>Vote</button>
                             </>
                     }
 

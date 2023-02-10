@@ -36,12 +36,16 @@ class VideogameService {
         return this.api.post('/saveVideogame', videogameData)
     }
 
+    getOneVideogame(videogame_id) {
+        return this.api.get(`/getOneVideogame/${videogame_id}`)
+    }
+
     filteredVideogame(name) {
         return this.api.get(`/filteredVideogame?name=${name}`)
     }
 
-    getOneVideogame(videogame_id) {
-        return this.api.get(`/getOneVideogame/${videogame_id}`)
+    getFindCategory(category) {
+        return this.api.get(`/getFindCategory/${category}`)
     }
 
     getAlphabeticOrder(dir) {
@@ -50,6 +54,10 @@ class VideogameService {
 
     getVotesOrder(dir) {
         return this.api.get(`/getVideogamesSorted?votes=${dir}`)
+    }
+
+    getCategoryOrder(dir) {
+        return this.api.get(`/getVideogamesSorted?category=${dir}`)
     }
 
     addVideogameVote(videogame_id) {

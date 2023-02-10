@@ -15,6 +15,7 @@
 .div-span-home-page {
     display: flex;
     justify-content: center;
+    text-decoration: none !important;
 }
 
 span {

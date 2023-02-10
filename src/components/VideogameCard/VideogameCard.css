@@ -13,4 +13,9 @@
     margin-right: 5%;
     object-fit: cover;
     height: 200px;
+    justify-content: center;
+}
+
+.card-text {
+    height: 130px;
 }

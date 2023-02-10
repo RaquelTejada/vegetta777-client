@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react"
-import { Form, Button } from "react-bootstrap"
+import { useState, useEffect, useContext } from "react"
+import { Form } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import videogameService from "../../services/videogame.service"
+import { VideogameContext } from "../../contexts/videogame.context"
 
 
 const EditVideogameForm = ({ videogame_id, closeModal }) => {
 
     const [videogameData, setVideogameData] = useState({})
+
+    const { loadVideogames } = useContext(VideogameContext)
 
     useEffect(() => {
         videogameService
@@ -22,24 +25,6 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
         setVideogameData({ ...videogameData, [name]: value })
     }
 
-    // const [loadingImage, setLoadingImage] = useState(false)
-
-    // const handleFileUpload = e => {
-
-    //     setLoadingImage(true)
-
-    //     const formData = new FormData()
-    //     formData.append('imageData', e.target.files[0])
-
-    //     uploadServices
-    //         .uploadimage(formData)
-    //         .then(res => {
-    //             setItineraryData({ ...itineraryData, images: res.data.cloudinary_url })
-    //             setLoadingImage(false)
-    //         })
-    //         .catch(err => console.log(err))
-    // }
-
     const handleFormSubmit = e => {
         e.preventDefault()
 
@@ -47,6 +32,7 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
             .editVideogame(videogame_id, videogameData)
             .then(() => {
                 navigate('/createVideogame')
+                loadVideogames()
                 closeModal()
             })
             .catch(err => console.error(err))
@@ -61,9 +47,7 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
 
             <Form.Group className="mb-3" controlId="desc">
                 <Form.Label>Image</Form.Label>
-                <Form.Control type="file"
-                // onChange={handleFileUpload} 
-                />
+                <Form.Control type="rul" value={image} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="desc">
@@ -83,8 +67,8 @@ const EditVideogameForm = ({ videogame_id, closeModal }) => {
                 </Form.Select>
             </Form.Group>
 
-            <div className="d-grid">
-                <Button className="create-button" type="submit">{'Edit Videogame'}</Button>
+            <div className="d-flex justify-content-center">
+                <button className="create-button" type="submit">{'Edit Videogame'}</button>
             </div>
 
         </Form>

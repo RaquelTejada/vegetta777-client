@@ -5,7 +5,6 @@ import { useState, useEffect, useContext } from 'react'
 import VideogameCard from '../../components/VideogameCard/VideogameCard'
 import FilterName from '../../components/FilterName/FilterName'
 import { VideogameContext } from '../../contexts/videogame.context'
-import { useParams } from 'react-router-dom'
 
 
 const VideogameListPage = () => {
@@ -83,51 +82,43 @@ const VideogameListPage = () => {
             .catch(err => console.log(err))
     }
 
-    const [categoryNow, setCategoryNow] = useState({
-        category: ''
-    })
 
-    const { loadVideogames, resetVideogame } = useContext(VideogameContext)
+    const filterCategory = (elm) => {
 
-    const category = categoryNow
-
-    useEffect(() => {
-        resetVideogame()
-        setCategoryNow({ category })
-    }, [])
-
-    const handleTypeChange = e => {
-        const { name } = e.target
-        setCategoryNow({ ...categoryNow, category: name })
-        loadVideogames(categoryNow.category, name)
+        videogameService
+            .getFindCategory(elm)
+            .then(({ data }) => {
+                setVideogames(data)
+            })
+            .catch(err => console.log(err))
     }
 
 
     return (
         <>
-            <Container fluid>
+            <Container>
                 <div>
-                    <h3 className="titles mb-5">Search by name</h3>
                     <FilterName setQuery={setQuery} />
                 </div>
                 <div >
-                    <button onClick={filterAlphabeticalyAsc}>Sort A-Z</button>
+                    <button className='margin-buttons' onClick={filterAlphabeticalyAsc}>Sort A-Z</button>
                     <button onClick={filterAlphabeticalyDesc}>Sort Z-A</button>
                 </div>
-                <div >
-                    <button onClick={filterVotesAsc}>Less voted</button>
-                    <button onClick={filterVotesDesc}>Top voted</button>
+                <div className='mt-3'>
+                    <button className='margin-buttons' onClick={filterVotesDesc}>Most voted</button>
+                    <button onClick={filterVotesAsc}>Least voted</button>
                 </div>
 
-                <Row>
-                    <button onClick={handleTypeChange}>Fight</button>
-                    <button onClick={handleTypeChange}>Arcade</button>
-                    <button onClick={handleTypeChange}>Rol</button>
-                    <button onClick={handleTypeChange}>Adventure</button>
-                    <button onClick={handleTypeChange}>Simulation</button>
-                </Row>
+                <div className='mt-3'>
+                    <button className='margin-buttons' onClick={() => printVideogames()}>All</button>
+                    <button className='margin-buttons' onClick={() => filterCategory('Fight')}>Fight</button>
+                    <button className='margin-buttons' onClick={() => filterCategory('Arcade')}>Arcade</button>
+                    <button className='margin-buttons' onClick={() => filterCategory('Rol')}>Rol</button>
+                    <button className='margin-buttons' onClick={() => filterCategory('Adventure')}>Adventure</button>
+                    <button onClick={() => filterCategory('Simulation')}>Simulation</button>
+                </div>
 
-                <Row>
+                <Row className='mt-3'>
                     {
                         videogames.map((videogame, idx) => {
                             return (
