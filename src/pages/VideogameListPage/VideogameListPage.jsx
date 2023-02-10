@@ -1,11 +1,11 @@
 import './VideogameListPage.css'
 import { Container, Row, Col } from 'react-bootstrap'
 import videogameService from '../../services/videogame.service'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import VideogameCard from '../../components/VideogameCard/VideogameCard'
 import FilterName from '../../components/FilterName/FilterName'
 import { VideogameContext } from '../../contexts/videogame.context'
-import { useContext } from 'react'
+import { useParams } from 'react-router-dom'
 
 
 const VideogameListPage = () => {
@@ -43,7 +43,7 @@ const VideogameListPage = () => {
         printVideogames()
     }, [])
 
-    const filterAlphabeticaly = () => {
+    const filterAlphabeticalyAsc = () => {
 
         videogameService
             .getAlphabeticOrder('asc')
@@ -51,6 +51,55 @@ const VideogameListPage = () => {
                 setVideogames(data)
             })
             .catch(err => console.log(err))
+    }
+
+    const filterAlphabeticalyDesc = () => {
+
+        videogameService
+            .getAlphabeticOrder('desc')
+            .then(({ data }) => {
+                setVideogames(data)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const filterVotesAsc = () => {
+
+        videogameService
+            .getVotesOrder('asc')
+            .then(({ data }) => {
+                setVideogames(data)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const filterVotesDesc = () => {
+
+        videogameService
+            .getVotesOrder('desc')
+            .then(({ data }) => {
+                setVideogames(data)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const [categoryNow, setCategoryNow] = useState({
+        category: ''
+    })
+
+    const { loadVideogames, resetVideogame } = useContext(VideogameContext)
+
+    const category = categoryNow
+
+    useEffect(() => {
+        resetVideogame()
+        setCategoryNow({ category })
+    }, [])
+
+    const handleTypeChange = e => {
+        const { name } = e.target
+        setCategoryNow({ ...categoryNow, category: name })
+        loadVideogames(categoryNow.category, name)
     }
 
 
@@ -61,12 +110,26 @@ const VideogameListPage = () => {
                     <h3 className="titles mb-5">Search by name</h3>
                     <FilterName setQuery={setQuery} />
                 </div>
-                <div>
-                    <button onClick={filterAlphabeticaly}>Sort A-Z</button>
+                <div >
+                    <button onClick={filterAlphabeticalyAsc}>Sort A-Z</button>
+                    <button onClick={filterAlphabeticalyDesc}>Sort Z-A</button>
                 </div>
+                <div >
+                    <button onClick={filterVotesAsc}>Less voted</button>
+                    <button onClick={filterVotesDesc}>Top voted</button>
+                </div>
+
+                <Row>
+                    <button onClick={handleTypeChange}>Fight</button>
+                    <button onClick={handleTypeChange}>Arcade</button>
+                    <button onClick={handleTypeChange}>Rol</button>
+                    <button onClick={handleTypeChange}>Adventure</button>
+                    <button onClick={handleTypeChange}>Simulation</button>
+                </Row>
+
                 <Row>
                     {
-                        videogames ? videogames.map((videogame, idx) => {
+                        videogames.map((videogame, idx) => {
                             return (
                                 <Col key={idx} md={{ span: 3 }}>
                                     <VideogameCard
@@ -80,8 +143,7 @@ const VideogameListPage = () => {
                                 </Col>
                             )
                         })
-                            :
-                            'Cargando...'}
+                    }
                 </Row>
             </Container>
         </>

@@ -48,6 +48,10 @@ class VideogameService {
         return this.api.get(`/getVideogamesSorted?name=${dir}`)
     }
 
+    getVotesOrder(dir) {
+        return this.api.get(`/getVideogamesSorted?votes=${dir}`)
+    }
+
     addVideogameVote(videogame_id) {
         return this.api.post(`/addVideogameVote/${videogame_id}`)
     }

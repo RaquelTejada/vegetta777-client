@@ -18,7 +18,7 @@ const HomePage = () => {
                         <p className='paragraph-home-page'>
                             Hi! I'm Vegetta777 and I have a question for you: <br />
                             Which are your the video games you would like the most to watch me to play? <br />
-                            Click on the right button and vote for your top 5!
+                            Click on the button and vote for your top 5!
                         </p>
                     </Col>
 

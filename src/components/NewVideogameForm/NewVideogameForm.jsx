@@ -27,7 +27,7 @@ const NewVideogameForm = ({ fireFinalActions }) => {
         e.preventDefault()
 
         videogameService
-            .saveVideogame({ ...videogameData, image })
+            .saveVideogame({ ...videogameData })
             .then(() => {
                 fireFinalActions();
                 loadVideogames()
@@ -43,7 +43,7 @@ const NewVideogameForm = ({ fireFinalActions }) => {
 
             <Form.Group className="mb-3" controlId="desc">
                 <Form.Label>Image</Form.Label>
-                <Form.Control type="file" />
+                <Form.Control type="url" value={image} onChange={handleInputChange} name='image' />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="desc">
