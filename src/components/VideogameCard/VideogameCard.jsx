@@ -8,12 +8,17 @@ import { VideogameContext } from '../../contexts/videogame.context'
 import videogameService from '../../services/videogame.service'
 import EditVideogameForm from '../../components/EditVideogameForm/EditVideogameForm'
 import { useNavigate } from 'react-router-dom'
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { MessageContext } from '../../contexts/userMessage.context';
 
 function VideogameCard({ image, name, category, votes, owner, _id }) {
 
-    const { loadVideogames } = useContext(VideogameContext)
+    const [showModal, setShowModal] = useState(false)
+    const [errors, setErrors] = useState([])
 
+    const { loadVideogames } = useContext(VideogameContext)
     const { user } = useContext(AuthContext)
+    const { setShowToast, setToastMessage } = useContext(MessageContext)
 
     const navigate = useNavigate()
 
@@ -26,10 +31,8 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                 navigate('/createVideogame')
 
             })
-            .catch(err => console.error(err))
+            .catch(err => setErrors(err.response.data.errorMessages))
     }
-
-    const [showModal, setShowModal] = useState(false)
 
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
@@ -39,9 +42,22 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
         videogameService
             .addVideogameVote(_id)
             .then(() => {
+                setShowToast(true)
+                setToastMessage('Remember you can only vote for your top 5')
                 loadVideogames()
             })
-            .catch(err => console.error(err))
+            .catch(err => setErrors(err.response.data.errorMessages))
+    }
+
+    const checkVotes = () => {
+
+        const filterUserId = votes.filter(elm => elm === user._id)
+
+        if (user.votes === 5) {
+            return true
+        } else if (filterUserId.length === 1) {
+            return true
+        } else return false
     }
 
 
@@ -91,9 +107,13 @@ function VideogameCard({ image, name, category, votes, owner, _id }) {
                             </>
                             :
                             <>
-                                <button onClick={handleVote} className='span-home-page mt-2'>Vote</button>
+                                <button onClick={handleVote} className='span-home-page mt-2'
+                                    disabled={checkVotes() ? true : false}
+                                >Vote</button>
                             </>
                     }
+
+                    {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
                 </Card.Body>
             </Card>

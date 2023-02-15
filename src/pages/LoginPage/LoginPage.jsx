@@ -7,7 +7,7 @@ const LoginPage = () => {
 
         <Container>
 
-            <Row>
+            <Row className='mt-5'>
 
                 <Col md={{ offset: 3, span: 6 }}>
 

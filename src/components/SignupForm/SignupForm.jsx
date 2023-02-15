@@ -1,7 +1,9 @@
-import { useState } from "react"
-import { Form, Button } from "react-bootstrap"
-import authService from "../../services/auth.service"
+import { useState, useContext } from 'react'
+import { Form, Button } from 'react-bootstrap'
+import authService from '../../services/auth.service'
 import { useNavigate } from 'react-router-dom'
+import { MessageContext } from './../../contexts/userMessage.context'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 
 
 const SignupForm = () => {
@@ -16,6 +18,10 @@ const SignupForm = () => {
         setSignupData({ ...signupData, [name]: value })
     }
 
+    const { setShowToast, setToastMessage } = useContext(MessageContext)
+
+    const [errors, setErrors] = useState([])
+
     const navigate = useNavigate()
 
     const handleSubmit = e => {
@@ -25,10 +31,12 @@ const SignupForm = () => {
         authService
             .signup(signupData)
             .then(() => {
+                setShowToast(true)
+                setToastMessage('Signed in successfully')
                 navigate('/login')
             })
             .catch(err => {
-                console.log(err.response.data.errorMessages)
+                setErrors(err.response.data.errorMessages)
             })
     }
 
@@ -47,6 +55,8 @@ const SignupForm = () => {
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
             </Form.Group>
+
+            {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
             <div className="d-grid">
                 <Button variant="dark" type="submit">{'Sign Up'}</Button>

@@ -1,8 +1,10 @@
-import { useState, useContext } from "react"
-import { Form, Button } from "react-bootstrap"
+import { useState, useContext } from 'react'
+import { Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from "../../contexts/auth.context"
-import authService from "../../services/auth.service"
+import { AuthContext } from '../../contexts/auth.context'
+import { MessageContext } from '../../contexts/userMessage.context'
+import authService from '../../services/auth.service'
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 
 
 const LoginForm = () => {
@@ -17,8 +19,11 @@ const LoginForm = () => {
         setLoginData({ ...loginData, [name]: value })
     }
 
+    const [errors, setErrors] = useState([])
+
     const navigate = useNavigate()
     const { storeToken, authenticateUser } = useContext(AuthContext)
+    const { setShowToast, setToastMessage } = useContext(MessageContext)
 
     const handleSubmit = e => {
 
@@ -30,12 +35,15 @@ const LoginForm = () => {
                 const tokenFromServe = data.authToken
                 storeToken(tokenFromServe)
                 authenticateUser()
+                setShowToast(true)
+                setToastMessage('Successfully logged in')
                 navigate('/')
             })
-            .catch(err => console.log(err.response.data.errorMessages))
+            .catch(err => setErrors(err.response.data.errorMessages))
     }
 
     const { password, email } = loginData
+
 
     return (
 
@@ -50,6 +58,8 @@ const LoginForm = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
             </Form.Group>
+
+            {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
             <div className="d-grid">
                 <Button variant="dark" type="submit">Log In</Button>
